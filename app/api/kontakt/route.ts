@@ -1,10 +1,19 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(req: Request) {
   try {
+    const apiKey = process.env.RESEND_API_KEY;
+
+    if (!apiKey) {
+      return NextResponse.json(
+        { ok: false, error: 'not_configured' },
+        { status: 501 }
+      );
+    }
+
+    const resend = new Resend(apiKey);
+
     const data = (await req.json()) as Record<string, string>;
 
     const name = (data.name || '').trim();
@@ -13,26 +22,28 @@ export async function POST(req: Request) {
     const service = (data.service || data.leistung || '').trim();
     const message = (data.message || data.nachricht || '').trim();
 
-    if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+    if (!name || !email) {
       return NextResponse.json(
         { ok: false, error: 'validation' },
         { status: 422 }
       );
     }
 
-    if (!process.env.RESEND_API_KEY) {
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       return NextResponse.json(
-        { ok: false, error: 'not_configured' },
-        { status: 501 }
+        { ok: false, error: 'validation' },
+        { status: 422 }
       );
     }
 
     const { error } = await resend.emails.send({
-      from: 'Website <noreply@boundforfuture.com>',
+      from: 'BOUND FOR FUTURE <noreply@boundforfuture.com>',
       to: ['kontakt@boundforfuture.com'],
       replyTo: email,
-      subject: `Neue Anfrage von ${name}`,
+      subject: `Neue Website-Anfrage von ${name}`,
       text: [
+        'Neue Anfrage über die Website',
+        '',
         `Name: ${name}`,
         `E-Mail: ${email}`,
         `Telefon: ${phone || '-'}`,
