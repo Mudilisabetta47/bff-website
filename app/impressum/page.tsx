@@ -40,7 +40,9 @@ export default function Page() {
 
           <p>
 
-            <strong>BOUND FOR FUTURE</strong>
+            <strong>{BRAND.operator}</strong>
+
+            <br />BOUND FOR FUTURE — eine Marke der MONVEX
 
             <br />Kirchbachstraße 200
 
@@ -50,25 +52,32 @@ export default function Page() {
 
           </p>
 
-          <h2>Inhaber</h2>
+          <h2>Vertreten durch</h2>
 
-          <p>Mohammed Al Bakhit</p>
+          <p>Geschäftsführer: Mohammed Al Bakhit. Er ist einzelvertretungsberechtigt.</p>
 
           <h2>Kontakt</h2>
 
           <p>
 
-            Telefon: 0421 49958207
+            Telefon: <a className="ulink" href={`tel:${BRAND.phoneHref}`}>{BRAND.phone}</a>
 
             <br />
 
-            E-Mail: <a className="ulink" href="mailto:kontakt@boundforfuture.com">kontakt@boundforfuture.com</a>
+            E-Mail: <a className="ulink" href={`mailto:${BRAND.email}`}>{BRAND.email}</a>
+
+            <br />Website: <a className="ulink" href={BRAND.operatorUrl}>monvex-group.de</a>
 
           </p>
 
-          <h2>Registereintrag &amp; Umsatzsteuer</h2>
+          <h2>Rechtsform und Registereintrag</h2>
 
-          <p>Kein Handelsregistereintrag.</p>
+          <p>
+            Rechtsform: Unternehmergesellschaft (haftungsbeschränkt). Sitz: Bremen.
+            <br />Die Gesellschaft befindet sich in Gründung (i. G.); die Eintragung im Handelsregister ist beantragt.
+            <br />Registergericht: Amtsgericht Bremen.
+            <br />Die Registernummer wird nach der Eintragung ergänzt.
+          </p>
 
           <h2>Verantwortlich nach § 18 Abs. 2 MStV</h2>
 

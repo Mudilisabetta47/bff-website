@@ -122,10 +122,16 @@ Sitemap, Footer und interne Links entstehen automatisch.
 - [ ] `BRAND.url` in `lib/content.ts` auf die echte Domain setzen
 - [ ] Social-Links im Footer eintragen
 - [ ] OG-Bild hinterlegen (1200×630 PNG) und in `app/layout.tsx` verlinken
-- [ ] Formularversand anbinden: `CONTACT_WEBHOOK_URL` in `.env.local` oder
-      `app/api/kontakt/route.ts` direkt an Resend/Postmark/SMTP hängen.
-      Ohne Konfiguration antwortet der Endpunkt bewusst mit 501 und das Formular
-      fällt auf den E-Mail-Fallback zurück.
+- [ ] Formularversand: `RESEND_API_KEY` im Hosting setzen und die Absenderdomain
+      in Resend verifizieren. Standardabsender: `BOUND FOR FUTURE <noreply@monvex-group.de>`;
+      alternativ `CONTACT_FROM_EMAIL` auf eine bereits verifizierte Absenderadresse setzen.
+      Empfänger und öffentliche Kontaktadresse kommen einheitlich aus `BRAND.email`
+      (`mudi@monvex-group.de`). Antworten auf Anfragen gehen dank `replyTo` an den Absender.
+      Ohne Schlüssel oder bei einem Versandfehler bietet das Formular einen manuellen
+      E-Mail-Link mit den eingegebenen Angaben an; die E-Mail muss dort abgesendet werden.
+      Eine erfolgreiche API-Antwort bestätigt die Annahme durch Resend, nicht den Eingang
+      im Postfach. Für die Empfangsprüfung nach dem Deployment eine echte Anfrage senden
+      und Zustellstatus sowie Posteingang/Spam prüfen.
 - [ ] Die Zahlen im Abschnitt „Unser Standard" sind als **Anspruch** formuliert, nicht als
       Bilanz. Erst durch belegte Ergebnisse ersetzen.
 - [ ] Die Projekte sind als **Konzeptstudien** gekennzeichnet. Kennzeichnung erst

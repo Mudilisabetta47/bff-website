@@ -5,10 +5,14 @@ export const BRAND = {
   short: 'BOUND',
   tagline: 'NÄCHSTER STOPP: ZUKUNFT.',
   claim: 'Digitalagentur für Marke, Web und Wachstum.',
-  email: 'info@mep-agentur.de',
+  email: 'mudi@monvex-group.de',
   url: 'https://boundforfuture.de',
   region: 'Deutschland',
   founded: '2026',
+  operator: 'MONVEX UG (haftungsbeschränkt) i. G.',
+  phone: '0421 499 58 207',
+  phoneHref: '+4942149958207',
+  operatorUrl: 'https://www.monvex-group.de',
 } as const;
 
 export const NAV = [

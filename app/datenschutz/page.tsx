@@ -37,9 +37,9 @@ export default function Page() {
           <h2>1. Verantwortliche Stelle</h2>
 
           <p>
-            <strong>BOUND FOR FUTURE</strong>
+            <strong>{BRAND.operator}</strong>
             <br />
-            Inhaber: Mohammed Al Bakhit
+            Vertreten durch Geschäftsführer Mohammed Al Bakhit
             <br />
             Kirchbachstraße 200
             <br />
@@ -47,14 +47,14 @@ export default function Page() {
             <br />
             Deutschland
             <br />
-            Telefon: 0421 49958207
+            Telefon: <a className="ulink" href={`tel:${BRAND.phoneHref}`}>{BRAND.phone}</a>
             <br />
             E-Mail:{' '}
             <a
               className="ulink"
-              href="mailto:kontakt@boundforfuture.com"
+              href={`mailto:${BRAND.email}`}
             >
-              kontakt@boundforfuture.com
+              {BRAND.email}
             </a>
           </p>
 
@@ -109,8 +109,7 @@ export default function Page() {
 
           <p>
             Wenn Sie unser Kontaktformular nutzen, verarbeiten wir die von Ihnen
-            eingegebenen Angaben, insbesondere Name, E-Mail-Adresse, Telefonnummer,
-            gewünschte Leistung und Nachricht, zur Bearbeitung Ihrer Anfrage.
+            eingegebenen Angaben, insbesondere Name, E-Mail-Adresse und Nachricht, zur Bearbeitung Ihrer Anfrage.
           </p>
 
           <p>
@@ -122,8 +121,8 @@ export default function Page() {
           </p>
 
           <p>
-            Die Website übermittelt die Formulardaten technisch an einen hierfür
-            vorgesehenen Webhook-Dienst. Eine weitergehende Speicherung oder
+            Die Website übermittelt die Formulardaten zum E-Mail-Versand an den
+            Dienst Resend. Eine weitergehende Speicherung oder
             Übermittlung erfolgt nur, soweit dies für die Bearbeitung der Anfrage
             erforderlich ist oder gesetzliche Verpflichtungen bestehen.
           </p>

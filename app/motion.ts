@@ -578,7 +578,8 @@ function initForm() {
       return;
     }
     const body = `Name: ${payload.name}\nE-Mail: ${payload.email}\n\n${payload.nachricht}`;
-    const to = form.getAttribute('data-mail') || 'info@mep-agentur.de';
+    const to = form.getAttribute('data-mail');
+    if (!to) return;
     const href = `mailto:${to}?subject=${encodeURIComponent('Projektanfrage — ' + payload.name)}&body=${encodeURIComponent(body)}`;
     if (mailLink) mailLink.href = href;
     const button = $<HTMLButtonElement>('button[type="submit"]', form);

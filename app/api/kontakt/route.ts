@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { BRAND } from '@/lib/content';
 
 export async function POST(req: Request) {
   try {
@@ -39,8 +40,8 @@ export async function POST(req: Request) {
     }
 
     const { error } = await resend.emails.send({
-      from: 'BOUND FOR FUTURE <noreply@boundforfuture.com>',
-      to: ['kontakt@boundforfuture.com'],
+      from: process.env.CONTACT_FROM_EMAIL || 'BOUND FOR FUTURE <noreply@monvex-group.de>',
+      to: [BRAND.email],
       replyTo: email,
       subject: `Neue Website-Anfrage von ${name}`,
       text: [

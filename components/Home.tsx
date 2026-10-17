@@ -434,6 +434,12 @@ export function Footer() {
             <a className="ulink" href={`mailto:${BRAND.email}`}>
               {BRAND.email}
             </a>
+            <a className="ulink" href={`tel:${BRAND.phoneHref}`}>
+              {BRAND.phone}
+            </a>
+            <p style={{ color: 'var(--dim)', fontSize: '0.875rem' }}>
+              Eine Marke der <a className="ulink" href={BRAND.operatorUrl}>{BRAND.operator}</a>
+            </p>
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               {FOOTER.social.map((s) => (
                 <a className="ulink" key={s.l} href={s.h} style={{ color: 'var(--dim)', fontSize: '0.875rem' }}>
