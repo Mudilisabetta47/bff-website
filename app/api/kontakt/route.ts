@@ -14,15 +14,17 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
 
-    const data = (await req.json()) as Record<string, string>;
+    const data = await req.json();
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+      return NextResponse.json({ ok: false, error: 'validation' }, { status: 422 });
+    }
+    const get = (key: string) => typeof data[key] === 'string' ? data[key].trim() : '';
 
-    const name = (data.name || '').trim();
-    const email = (data.email || '').trim();
-    const phone = (data.phone || '').trim();
-    const service = (data.service || data.leistung || '').trim();
-    const message = (data.message || data.nachricht || '').trim();
+    const name = get('name');
+    const email = get('email');
+    const message = get('nachricht') || get('message');
 
-    if (!name || !email) {
+    if (!name || !email || !message || name.length > 120 || email.length > 254 || message.length > 5000) {
       return NextResponse.json(
         { ok: false, error: 'validation' },
         { status: 422 }
@@ -46,8 +48,6 @@ export async function POST(req: Request) {
         '',
         `Name: ${name}`,
         `E-Mail: ${email}`,
-        `Telefon: ${phone || '-'}`,
-        `Leistung: ${service || '-'}`,
         '',
         'Nachricht:',
         message || '-',

@@ -94,7 +94,7 @@ Client-Komponente (`components/MotionRoot.tsx`). Ohne JavaScript bleibt die Seit
 7. Prozess — sechs Phasen, große mitlaufende Zahl
 8. Zahlen — animierte Zähler
 9. Finale — Planetenrand, Sternenhimmel, großer CTA
-10. Kontakt — mehrstufige Anfrage
+10. Kontakt — kurzes Formular mit Name, E-Mail und Nachricht
 11. Footer — Wortmarke, `NÄCHSTER STOPP: ZUKUNFT.`
 
 ---

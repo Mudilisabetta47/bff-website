@@ -377,49 +377,21 @@ export function Contact() {
           </h2>
         </div>
 
-        <form className="form" data-mail={BRAND.email} data-endpoint="/api/kontakt" noValidate>
+        <form className="form" data-mail={BRAND.email} data-endpoint="/api/kontakt">
           <div className="form__steps">
-            {CONTACT.steps.map((s, i) => (
-              <div className="fstep" role="group" aria-labelledby={`fs-${s.key}`} key={s.key} data-reveal="up" data-stagger={String(i * 70)}>
-                <p className="fstep__head" id={`fs-${s.key}`}>
-                  <span className="fstep__n">{String(i + 1).padStart(2, '0')}</span>
-                  <span className="fstep__t">{s.title}</span>
-                  <span className="fstep__hint">{s.hint}</span>
-                </p>
-                <div className="chips">
-                  {s.options.map((o) => (
-                    <label className="chip" key={o}>
-                      <input type={s.multiple ? 'checkbox' : 'radio'} name={s.key} value={o} />
-                      <span>{o}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            <div className="fstep" role="group" aria-labelledby="fs-wer" data-reveal="up">
-              <p className="fstep__head" id="fs-wer">
-                <span className="fstep__n">04</span>
-                <span className="fstep__t">Wer sind Sie?</span>
+            <div className="fields">
+              <p className="field">
+                <input id="f-name" name="name" type="text" placeholder=" " required autoComplete="name" maxLength={120} />
+                <label htmlFor="f-name">{CONTACT.fields.name}</label>
               </p>
-              <div className="fields">
-                <p className="field">
-                  <input id="f-name" name="name" type="text" placeholder=" " required autoComplete="name" />
-                  <label htmlFor="f-name">{CONTACT.fields.name}</label>
-                </p>
-                <p className="field">
-                  <input id="f-firma" name="firma" type="text" placeholder=" " autoComplete="organization" />
-                  <label htmlFor="f-firma">{CONTACT.fields.company}</label>
-                </p>
-                <p className="field field--full">
-                  <input id="f-mail" name="email" type="email" placeholder=" " required autoComplete="email" />
-                  <label htmlFor="f-mail">{CONTACT.fields.email}</label>
-                </p>
-                <p className="field field--full">
-                  <textarea id="f-msg" name="nachricht" placeholder=" " rows={3} />
-                  <label htmlFor="f-msg">{CONTACT.fields.message}</label>
-                </p>
-              </div>
+              <p className="field">
+                <input id="f-mail" name="email" type="email" placeholder=" " required autoComplete="email" maxLength={254} />
+                <label htmlFor="f-mail">{CONTACT.fields.email}</label>
+              </p>
+              <p className="field field--full">
+                <textarea id="f-msg" name="nachricht" placeholder=" " rows={3} required maxLength={5000} />
+                <label htmlFor="f-msg">{CONTACT.fields.message}</label>
+              </p>
             </div>
           </div>
 
@@ -433,9 +405,9 @@ export function Contact() {
             </button>
           </div>
 
-          <div className="form__done" role="status" aria-live="polite">
-            <p className="d-sm">{CONTACT.success.title}</p>
-            <p className="lead">{CONTACT.success.body}</p>
+          <div className="form__done" role="status" aria-live="polite" tabIndex={-1}>
+            <p className="d-sm" data-result-title>{CONTACT.success.title}</p>
+            <p className="lead" data-result-body>{CONTACT.success.body}</p>
             <p data-fallback>
               <a className="ulink" data-mailto href={`mailto:${BRAND.email}`}>
                 E-Mail-Programm öffnen <Arrow />
