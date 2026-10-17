@@ -6,7 +6,7 @@ export const BRAND = {
   tagline: 'NÄCHSTER STOPP: ZUKUNFT.',
   claim: 'Digitalagentur für Marke, Web und Wachstum.',
   email: 'mudi@monvex-group.de',
-  url: 'https://boundforfuture.de',
+  url: 'https://www.boundforfuture.com',
   region: 'Deutschland',
   founded: '2026',
   operator: 'MONVEX UG (haftungsbeschränkt) i. G.',
