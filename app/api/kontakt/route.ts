@@ -31,7 +31,8 @@ export async function POST(req: Request) {
     // Honeypot: Bots füllen das versteckte Feld aus; still als Erfolg quittieren.
     if (get('website')) return NextResponse.json({ ok: true });
 
-    const secret = process.env.RECAPTCHA_SECRET_KEY;
+    // Nur prüfen, wenn Secret-Key und Site-Key gesetzt sind; sonst sendet das Formular kein Token.
+    const secret = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? process.env.RECAPTCHA_SECRET_KEY : '';
     if (secret) {
       const token = get('recaptcha');
       let human = false;
