@@ -569,7 +569,7 @@ function initForm() {
     if (!form.reportValidity() || form.getAttribute('aria-busy') === 'true') return;
     const fd = new FormData(form);
     const get = (key: string) => String(fd.get(key) || '').trim();
-    const payload = { name: get('name'), email: get('email'), nachricht: get('nachricht') };
+    const payload = { name: get('name'), email: get('email'), nachricht: get('nachricht'), website: get('website') };
     if (!payload.name || !payload.nachricht) {
       const field = $<HTMLInputElement | HTMLTextAreaElement>(!payload.name ? '#f-name' : '#f-msg', form);
       field?.setCustomValidity('Bitte füllen Sie dieses Feld aus.');

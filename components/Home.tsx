@@ -379,6 +379,10 @@ export function Contact() {
 
         <form className="form" data-mail={BRAND.email} data-endpoint="/api/kontakt">
           <div className="form__steps">
+            <p className="hp" aria-hidden="true">
+              <label htmlFor="f-web">Website</label>
+              <input id="f-web" name="website" type="text" tabIndex={-1} autoComplete="off" />
+            </p>
             <div className="fields">
               <p className="field">
                 <input id="f-name" name="name" type="text" placeholder=" " required autoComplete="name" maxLength={120} />

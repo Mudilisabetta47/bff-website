@@ -21,6 +21,9 @@ export async function POST(req: Request) {
     }
     const get = (key: string) => typeof data[key] === 'string' ? data[key].trim() : '';
 
+    // Honeypot: Bots füllen das versteckte Feld aus; still als Erfolg quittieren.
+    if (get('website')) return NextResponse.json({ ok: true });
+
     const name = get('name');
     const email = get('email');
     const message = get('nachricht') || get('message');
