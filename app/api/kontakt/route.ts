@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { BRAND } from '@/lib/content';
+import { confirmationMail } from '@/lib/mail';
 
 export async function POST(req: Request) {
   try {
@@ -99,6 +100,23 @@ export async function POST(req: Request) {
         { ok: false, error: 'mail_send_failed' },
         { status: 500 }
       );
+    }
+
+    // Bestätigung an den Absender; ein Fehler hier darf die Anfrage nicht scheitern lassen.
+    try {
+      const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || new URL(req.url).origin).replace(/\/$/, '');
+      const mail = confirmationMail({ name, email, message, siteUrl });
+      const { error: confirmError } = await resend.emails.send({
+        from: process.env.CONTACT_FROM_EMAIL || 'BOUND FOR FUTURE <noreply@monvex-group.de>',
+        to: [email],
+        replyTo: recipients[0],
+        subject: mail.subject,
+        html: mail.html,
+        text: mail.text,
+      });
+      if (confirmError) console.error('Confirmation mail error:', confirmError);
+    } catch (err) {
+      console.error('Confirmation mail error:', err);
     }
 
     return NextResponse.json({ ok: true });

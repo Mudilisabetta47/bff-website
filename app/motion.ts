@@ -558,6 +558,10 @@ function initSky() {
   observers.push({ disconnect: () => cancelAnimationFrame(raf) } as unknown as IntersectionObserver);
 }
 
+function hasConsent() {
+  try { return localStorage.getItem('bff-consent') === 'all'; } catch { return false; }
+}
+
 /* ---------------- reCAPTCHA v3 (lazy, erst beim Absenden geladen) ---------------- */
 type Grecaptcha = { ready: (cb: () => void) => void; execute: (key: string, o: { action: string }) => Promise<string> };
 function recaptchaToken(siteKey: string): Promise<string> {
@@ -595,6 +599,13 @@ function initForm() {
       field?.setCustomValidity('Bitte füllen Sie dieses Feld aus.');
       field?.reportValidity();
       field?.addEventListener('input', () => field.setCustomValidity(''), { once: true });
+      return;
+    }
+    const consentNote = $<HTMLElement>('[data-consent-note]', form);
+    if (consentNote) consentNote.hidden = true;
+    if (form.getAttribute('data-recaptcha') && !hasConsent()) {
+      if (consentNote) consentNote.hidden = false;
+      window.dispatchEvent(new CustomEvent('bff:open-consent'));
       return;
     }
     const body = `Name: ${payload.name}\nE-Mail: ${payload.email}\n\n${payload.nachricht}`;
@@ -640,6 +651,9 @@ function initForm() {
 
 /* ---------------- Seitenübergang ---------------- */
 function initTransitions() {
+  on(document, 'click', (e) => {
+    if ((e.target as HTMLElement).closest?.('[data-open-consent]')) window.dispatchEvent(new CustomEvent('bff:open-consent'));
+  });
   on(document, 'click', (e) => {
     const a = (e.target as HTMLElement).closest?.('a[data-transition]') as HTMLAnchorElement | null;
     if (!a || reduced()) return;

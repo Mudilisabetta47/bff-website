@@ -2,7 +2,14 @@ import type { Metadata, Viewport } from 'next';
 import { BRAND, SERVICES, CITIES } from '@/lib/content';
 import MotionRoot from '@/components/MotionRoot';
 import { Backdrop, Curtain, Cursor, Nav } from '@/components/Chrome';
+import CookieConsent from '@/components/CookieConsent';
+import { Archivo, IBM_Plex_Mono, Inter_Tight } from 'next/font/google';
 import './globals.css';
+
+// Schriften werden beim Build geladen und von der eigenen Domain ausgeliefert (kein Google-Kontakt im Browser).
+const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], display: 'swap', variable: '--font-archivo' });
+const plexMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], display: 'swap', variable: '--font-plex-mono' });
+const interTight = Inter_Tight({ subsets: ['latin'], display: 'swap', variable: '--font-inter-tight' });
 
 const description =
   'BOUND FOR FUTURE ist eine Digitalagentur für Webdesign, Branding, Online-Marketing, SEO, Content und individuelle digitale Lösungen. Nächster Stopp: Zukunft.';
@@ -85,14 +92,8 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de">
+    <html lang="de" className={`${archivo.variable} ${plexMono.variable} ${interTight.variable}`}>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@300..700&display=swap"
-        />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </head>
       <body>
@@ -105,6 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Nav />
         {children}
         <MotionRoot />
+        <CookieConsent recaptcha={!!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY} />
       </body>
     </html>
   );

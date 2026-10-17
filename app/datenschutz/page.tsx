@@ -90,19 +90,25 @@ export default function Page() {
             Auftragsverarbeitung gemäß Art. 28 DSGVO.
           </p>
 
-          <h2>4. Google Fonts</h2>
+          <h2>4. Schriftarten</h2>
 
           <p>
-            Diese Website verwendet Schriftarten von Google Fonts. Dabei kann eine
-            Verbindung zu Servern von Google hergestellt werden, wodurch
-            insbesondere technische Verbindungsdaten wie die IP-Adresse an Google
-            übertragen werden können.
+            Die auf dieser Website verwendeten Schriftarten (Archivo, Inter Tight und
+            IBM Plex Mono) werden lokal von unserem eigenen Server bzw. Hosting-Anbieter
+            ausgeliefert. Beim Aufruf der Seite wird keine Verbindung zu Servern von
+            Google hergestellt, um Schriftarten nachzuladen.
           </p>
 
+          <h2>Cookies, lokale Speicherung und Einwilligung</h2>
+
           <p>
-            Google Fonts wird zur einheitlichen und ansprechenden Darstellung
-            unserer Website eingesetzt. Soweit personenbezogene Daten verarbeitet
-            werden, erfolgt dies auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
+            Wir speichern Ihre Auswahl im Cookie-Hinweis im lokalen Speicher Ihres
+            Browsers (Eintrag „bff-consent“). Dieser Eintrag ist technisch erforderlich,
+            damit wir Ihre Entscheidung berücksichtigen können (§ 25 Abs. 2 Nr. 2 TDDDG).
+            Tracking- oder Marketing-Cookies setzen wir nicht ein. Optionale Dienste,
+            wie Google reCAPTCHA, werden erst nach Ihrer Einwilligung geladen
+            (§ 25 Abs. 1 TDDDG, Art. 6 Abs. 1 lit. a DSGVO). Sie können Ihre Auswahl
+            jederzeit über den Link „Cookie-Einstellungen“ im Footer ändern.
           </p>
 
           <h2>5. Kontaktformular</h2>

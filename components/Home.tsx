@@ -407,6 +407,10 @@ export function Contact() {
             </label>
           </p>
 
+          <p className="form__note" role="alert" data-consent-note hidden>
+            Für den Spam-Schutz benötigen wir Ihre Zustimmung zu Google reCAPTCHA. Bitte wählen Sie unten im Hinweis „Alle akzeptieren“ und senden Sie das Formular erneut ab.
+          </p>
+
           <div className="form__foot">
             <p className="form__legal">
               Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Angaben zur Bearbeitung der Anfrage zu. Mehr dazu in
@@ -493,6 +497,9 @@ export function Footer() {
         <div className="foot__base">
           <p>
             © {year} {BRAND.name}. {BRAND.tagline}
+          </p>
+          <p>
+            <button type="button" className="ulink" data-open-consent>Cookie-Einstellungen</button>
           </p>
           <p>
             {CITIES.map((c) => c.name).join(' · ')}
