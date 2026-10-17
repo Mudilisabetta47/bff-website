@@ -304,7 +304,7 @@ export const CONTACT = {
   lead: 'Name, E-Mail und eine kurze Nachricht genügen — wir melden uns innerhalb von 24 Stunden.',
   fields: { name: 'Ihr Name', email: 'E-Mail', message: 'Ihre Nachricht (kurz genügt)' },
   submit: 'Anfrage senden',
-  success: { title: 'Angekommen.', body: 'Danke — wir melden uns innerhalb von 24 Stunden.' },
+  success: { title: 'Hey,', body: 'vielen Dank für Ihre Anfrage! Wir haben Ihre Nachricht erhalten und melden uns innerhalb von 24 Stunden persönlich bei Ihnen.' },
 };
 
 export interface City { slug: string; name: string; article: string; region: string; intro: string; local: string[]; }
@@ -334,7 +334,7 @@ export const FOOTER = {
     { title: 'Agentur', links: [
       { l: 'Arbeiten', h: '/#arbeiten' }, { l: 'Prozess', h: '/#prozess' },
       { l: 'Studio', h: '/#studio' }, { l: 'Kontakt', h: '/#kontakt' },
-      { l: 'Impressum', h: '/impressum' }, { l: 'Datenschutz', h: '/datenschutz' },
+      { l: 'Impressum', h: '/impressum' }, { l: 'Datenschutz', h: '/datenschutz' }, { l: 'AGB', h: '/agb' },
     ] },
   ],
   social: [{ l: 'Instagram', h: '#' }, { l: 'LinkedIn', h: '#' }, { l: 'Behance', h: '#' }],

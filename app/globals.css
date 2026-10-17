@@ -576,6 +576,10 @@ body.intro-done .hero__skip { opacity: 0; pointer-events: none; }
 .field input:not(:placeholder-shown) + label, .field textarea:not(:placeholder-shown) + label {
   transform: translateY(-20px) scale(0.68); color: var(--accent);
 }
+.check { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--dim); }
+.check input { flex: none; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+.check label { cursor: pointer; }
+.check a { text-decoration: underline; text-underline-offset: 3px; color: var(--text); }
 .form__foot { display: flex; flex-wrap: wrap; gap: 16px 26px; align-items: center; justify-content: space-between; }
 .form__legal { font-size: 0.8125rem; color: var(--faint); max-width: 46ch; }
 .form__legal a { text-decoration: underline; text-underline-offset: 3px; }

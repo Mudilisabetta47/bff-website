@@ -54,6 +54,10 @@ export async function POST(req: Request) {
       }
     }
 
+    if (!get('agb')) {
+      return NextResponse.json({ ok: false, error: 'validation' }, { status: 422 });
+    }
+
     const name = get('name');
     const email = get('email');
     const message = get('nachricht') || get('message');

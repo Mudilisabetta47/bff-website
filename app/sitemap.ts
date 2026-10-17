@@ -12,5 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...PROJECTS.map((p) => ({ url: `${BRAND.url}/arbeiten/${p.slug}`, lastModified: now, changeFrequency: 'yearly' as const, priority: 0.6 })),
     { url: `${BRAND.url}/impressum`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
     { url: `${BRAND.url}/datenschutz`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
+    { url: `${BRAND.url}/agb`, lastModified: now, changeFrequency: 'yearly', priority: 0.2 },
   ];
 }

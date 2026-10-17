@@ -589,7 +589,7 @@ function initForm() {
     if (!form.reportValidity() || form.getAttribute('aria-busy') === 'true') return;
     const fd = new FormData(form);
     const get = (key: string) => String(fd.get(key) || '').trim();
-    const payload = { name: get('name'), email: get('email'), nachricht: get('nachricht'), website: get('website') };
+    const payload = { name: get('name'), email: get('email'), nachricht: get('nachricht'), website: get('website'), agb: get('agb') };
     if (!payload.name || !payload.nachricht) {
       const field = $<HTMLInputElement | HTMLTextAreaElement>(!payload.name ? '#f-name' : '#f-msg', form);
       field?.setCustomValidity('Bitte füllen Sie dieses Feld aus.');
@@ -626,9 +626,10 @@ function initForm() {
     if (button) button.disabled = false;
     const title = $('[data-result-title]', form);
     const message = $('[data-result-body]', form);
-    if (title) title.textContent = sent ? 'Angekommen.' : 'Bitte per E-Mail senden.';
+    const first = payload.name.split(/\s+/)[0];
+    if (title) title.textContent = sent ? `Hey ${first},` : 'Bitte per E-Mail senden.';
     if (message) message.textContent = sent
-      ? 'Danke — wir melden uns innerhalb von 24 Stunden.'
+      ? 'vielen Dank für Ihre Anfrage! Wir haben Ihre Nachricht erhalten und melden uns innerhalb von 24 Stunden persönlich bei Ihnen.'
       : 'Der direkte Versand hat nicht geklappt. Öffnen Sie Ihr E-Mail-Programm und senden Sie die vorbereitete Anfrage ab.';
     const note = $('[data-fallback]', form);
     if (note) (note as HTMLElement).hidden = sent;

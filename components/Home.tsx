@@ -400,6 +400,13 @@ export function Contact() {
             </div>
           </div>
 
+          <p className="check">
+            <input id="f-agb" name="agb" type="checkbox" required />
+            <label htmlFor="f-agb">
+              Ich habe die <a href="/agb" target="_blank" rel="noopener noreferrer">AGB</a> gelesen und akzeptiere sie.
+            </label>
+          </p>
+
           <div className="form__foot">
             <p className="form__legal">
               Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Angaben zur Bearbeitung der Anfrage zu. Mehr dazu in
