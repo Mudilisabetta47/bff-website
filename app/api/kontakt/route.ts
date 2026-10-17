@@ -31,6 +31,28 @@ export async function POST(req: Request) {
     // Honeypot: Bots füllen das versteckte Feld aus; still als Erfolg quittieren.
     if (get('website')) return NextResponse.json({ ok: true });
 
+    const secret = process.env.RECAPTCHA_SECRET_KEY;
+    if (secret) {
+      const token = get('recaptcha');
+      let human = false;
+      if (token) {
+        try {
+          const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ secret, response: token }),
+          });
+          const v = await res.json();
+          human = v.success === true && (v.score ?? 0) >= 0.5 && (!v.action || v.action === 'kontakt');
+        } catch (err) {
+          console.error('reCAPTCHA verify error:', err);
+        }
+      }
+      if (!human) {
+        return NextResponse.json({ ok: false, error: 'recaptcha' }, { status: 403 });
+      }
+    }
+
     const name = get('name');
     const email = get('email');
     const message = get('nachricht') || get('message');

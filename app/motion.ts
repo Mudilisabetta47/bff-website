@@ -558,6 +558,26 @@ function initSky() {
   observers.push({ disconnect: () => cancelAnimationFrame(raf) } as unknown as IntersectionObserver);
 }
 
+/* ---------------- reCAPTCHA v3 (lazy, erst beim Absenden geladen) ---------------- */
+type Grecaptcha = { ready: (cb: () => void) => void; execute: (key: string, o: { action: string }) => Promise<string> };
+function recaptchaToken(siteKey: string): Promise<string> {
+  const w = window as unknown as { grecaptcha?: Grecaptcha };
+  const run = () => new Promise<string>((resolve, reject) => {
+    const g = w.grecaptcha;
+    if (!g) return reject(new Error('recaptcha'));
+    g.ready(() => g.execute(siteKey, { action: 'kontakt' }).then(resolve, reject));
+  });
+  if (w.grecaptcha) return run();
+  return new Promise<string>((resolve, reject) => {
+    const el = document.createElement('script');
+    el.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
+    el.async = true;
+    el.onload = () => run().then(resolve, reject);
+    el.onerror = () => reject(new Error('recaptcha'));
+    document.head.appendChild(el);
+  });
+}
+
 /* ---------------- Formular ---------------- */
 function initForm() {
   const form = $<HTMLFormElement>('form.form');
@@ -587,11 +607,16 @@ function initForm() {
     if (button) button.disabled = true;
     let sent = false;
     const endpoint = form.getAttribute('data-endpoint');
-    if (endpoint) {
+    const siteKey = form.getAttribute('data-recaptcha');
+    let recaptcha = '';
+    if (siteKey) {
+      try { recaptcha = await recaptchaToken(siteKey); } catch { recaptcha = ''; }
+    }
+    if (endpoint && (!siteKey || recaptcha)) {
       const ac = new AbortController();
       const timeout = setTimeout(() => ac.abort(), 10000);
       try {
-        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ac.signal });
+        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, recaptcha }), signal: ac.signal });
         const result = await response.json();
         sent = response.ok && result.ok === true;
       } catch { sent = false; }

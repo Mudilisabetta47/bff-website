@@ -127,6 +127,20 @@ export default function Page() {
             erforderlich ist oder gesetzliche Verpflichtungen bestehen.
           </p>
 
+          {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
+            <p>
+              Zum Schutz vor Spam und Missbrauch setzen wir im Kontaktformular
+              Google reCAPTCHA v3 ein (Google Ireland Limited, Gordon House,
+              Barrow Street, Dublin 4, Irland). Beim Absenden wird das Skript von
+              Google geladen; dabei werden u. a. IP-Adresse, Browser- und
+              Geräteangaben sowie das Nutzungsverhalten auf der Seite an Google
+              übermittelt und ausgewertet. Rechtsgrundlage ist unser berechtigtes
+              Interesse an der Abwehr von Spam gemäß Art. 6 Abs. 1 lit. f DSGVO.
+              Weitere Informationen finden Sie in der Datenschutzerklärung von
+              Google unter https://policies.google.com/privacy.
+            </p>
+          )}
+
           <h2>6. Analyse-Tools und Werbung</h2>
 
           <p>

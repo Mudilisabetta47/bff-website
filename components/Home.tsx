@@ -367,6 +367,7 @@ export function Finale() {
 }
 
 export function Contact() {
+  const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || undefined;
   return (
     <section className="section" id="kontakt" aria-labelledby="contact-h" style={{ paddingTop: 0 }}>
       <div className="shell">
@@ -377,7 +378,7 @@ export function Contact() {
           </h2>
         </div>
 
-        <form className="form" data-mail={BRAND.email} data-endpoint="/api/kontakt">
+        <form className="form" data-mail={BRAND.email} data-endpoint="/api/kontakt" data-recaptcha={recaptchaKey}>
           <div className="form__steps">
             <p className="hp" aria-hidden="true">
               <label htmlFor="f-web">Website</label>
@@ -403,6 +404,11 @@ export function Contact() {
             <p className="form__legal">
               Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Angaben zur Bearbeitung der Anfrage zu. Mehr dazu in
               der <a href="/datenschutz">Datenschutzerklärung</a>.
+              {recaptchaKey && (
+                <> Diese Seite ist durch reCAPTCHA geschützt; es gelten die{' '}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a> und die{' '}
+                <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Nutzungsbedingungen</a> von Google.</>
+              )}
             </p>
             <button className="btn btn--lg btn--accent" type="submit" data-magnet="0.2">
               {CONTACT.submit} <Arrow />
