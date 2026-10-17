@@ -566,34 +566,49 @@ function initForm() {
   const mailLink = $<HTMLAnchorElement>('[data-mailto]', form);
   on(form, 'submit', async (e) => {
     e.preventDefault();
+    if (!form.reportValidity() || form.getAttribute('aria-busy') === 'true') return;
     const fd = new FormData(form);
-    const get = (k: string) => (fd.getAll(k) as string[]).filter(Boolean).join(', ');
-    const payload = {
-      projekt: get('projekt'), budget: get('budget'), zeit: get('zeit'),
-      name: get('name'), firma: get('firma'), email: get('email'), nachricht: get('nachricht'),
-    };
-    const body =
-      `Thema: ${payload.projekt || '—'}\nBudget: ${payload.budget || '—'}\nZeitrahmen: ${payload.zeit || '—'}\n\n` +
-      `Name: ${payload.name}\nUnternehmen: ${payload.firma || '—'}\nE-Mail: ${payload.email}\n\n${payload.nachricht}`;
-    const to = form.getAttribute('data-mail') || 'info@mep-agentur.de';
-    const href = `mailto:${to}?subject=${encodeURIComponent('Projektanfrage — ' + (payload.firma || payload.name))}&body=${encodeURIComponent(body)}`;
+    const get = (key: string) => String(fd.get(key) || '').trim();
+    const payload = { name: get('name'), email: get('email'), nachricht: get('nachricht') };
+    if (!payload.name || !payload.nachricht) {
+      const field = $<HTMLInputElement | HTMLTextAreaElement>(!payload.name ? '#f-name' : '#f-msg', form);
+      field?.setCustomValidity('Bitte füllen Sie dieses Feld aus.');
+      field?.reportValidity();
+      field?.addEventListener('input', () => field.setCustomValidity(''), { once: true });
+      return;
+    }
+    const body = `Name: ${payload.name}\nE-Mail: ${payload.email}\n\n${payload.nachricht}`;
+    const to = form.getAttribute('data-mail');
+    if (!to) return;
+    const href = `mailto:${to}?subject=${encodeURIComponent('Projektanfrage — ' + payload.name)}&body=${encodeURIComponent(body)}`;
     if (mailLink) mailLink.href = href;
+    const button = $<HTMLButtonElement>('button[type="submit"]', form);
+    form.setAttribute('aria-busy', 'true');
+    if (button) button.disabled = true;
     let sent = false;
     const endpoint = form.getAttribute('data-endpoint');
     if (endpoint) {
+      const ac = new AbortController();
+      const timeout = setTimeout(() => ac.abort(), 10000);
       try {
-        const ac = new AbortController();
-        const t = setTimeout(() => ac.abort(), 4000);
-        const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ac.signal });
-        clearTimeout(t);
-        sent = r.ok;
+        const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: ac.signal });
+        const result = await response.json();
+        sent = response.ok && result.ok === true;
       } catch { sent = false; }
+      finally { clearTimeout(timeout); }
     }
-    form.classList.add('done');
+    form.removeAttribute('aria-busy');
+    if (button) button.disabled = false;
+    const title = $('[data-result-title]', form);
+    const message = $('[data-result-body]', form);
+    if (title) title.textContent = sent ? 'Angekommen.' : 'Bitte per E-Mail senden.';
+    if (message) message.textContent = sent
+      ? 'Danke — wir melden uns innerhalb von 24 Stunden.'
+      : 'Der direkte Versand hat nicht geklappt. Öffnen Sie Ihr E-Mail-Programm und senden Sie die vorbereitete Anfrage ab.';
     const note = $('[data-fallback]', form);
     if (note) (note as HTMLElement).hidden = sent;
-    (done as HTMLElement | null)?.focus?.();
-    if (!sent) window.setTimeout(() => { window.location.href = href; }, 350);
+    form.classList.add('done');
+    (done as HTMLElement | null)?.focus();
   });
 }
 

@@ -5,10 +5,14 @@ export const BRAND = {
   short: 'BOUND',
   tagline: 'NÄCHSTER STOPP: ZUKUNFT.',
   claim: 'Digitalagentur für Marke, Web und Wachstum.',
-  email: 'info@mep-agentur.de',
+  email: 'mudi@monvex-group.de',
   url: 'https://boundforfuture.de',
   region: 'Deutschland',
   founded: '2026',
+  operator: 'MONVEX UG (haftungsbeschränkt) i. G.',
+  phone: '0421 499 58 207',
+  phoneHref: '+4942149958207',
+  operatorUrl: 'https://www.monvex-group.de',
 } as const;
 
 export const NAV = [
@@ -297,16 +301,8 @@ export const STATS = {
 export const CONTACT = {
   kicker: 'Kontakt',
   lines: ['Erzählen Sie uns,', 'wohin es gehen soll.'],
-  lead: 'Zwei Minuten für ein paar Fragen — danach melden wir uns innerhalb von 24 Stunden mit einer ehrlichen Einschätzung.',
-  steps: [
-    { key: 'projekt', title: 'Worum geht es?', hint: 'Mehrfachauswahl möglich', multiple: true,
-      options: ['Website', 'Marke', 'Online-Marketing', 'SEO', 'Content & Social', 'Digitale Lösung', 'Etwas anderes'] },
-    { key: 'budget', title: 'Welcher Budgetrahmen?', hint: 'Grobe Einordnung genügt', multiple: false,
-      options: ['unter 5.000 €', '5.000 – 15.000 €', '15.000 – 40.000 €', '40.000 € +', 'Noch offen'] },
-    { key: 'zeit', title: 'Wann soll es live sein?', hint: 'Realistisch geschätzt', multiple: false,
-      options: ['So schnell wie möglich', 'In 1 – 3 Monaten', 'In 3 – 6 Monaten', 'Noch keine Deadline'] },
-  ],
-  fields: { name: 'Ihr Name', company: 'Unternehmen', email: 'E-Mail', message: 'Worum geht es? (kurz genügt)' },
+  lead: 'Name, E-Mail und eine kurze Nachricht genügen — wir melden uns innerhalb von 24 Stunden.',
+  fields: { name: 'Ihr Name', email: 'E-Mail', message: 'Ihre Nachricht (kurz genügt)' },
   submit: 'Anfrage senden',
   success: { title: 'Angekommen.', body: 'Danke — wir melden uns innerhalb von 24 Stunden.' },
 };
