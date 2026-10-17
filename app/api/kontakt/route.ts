@@ -15,6 +15,13 @@ export async function POST(req: Request) {
 
     const resend = new Resend(apiKey);
 
+    // Optional: CONTACT_TO_EMAIL (mehrere Adressen mit Komma trennen), sonst BRAND.email.
+    const recipients = (process.env.CONTACT_TO_EMAIL || '')
+      .split(',')
+      .map((a) => a.trim())
+      .filter(Boolean);
+    if (!recipients.length) recipients.push(BRAND.email);
+
     const data = await req.json();
     if (!data || typeof data !== 'object' || Array.isArray(data)) {
       return NextResponse.json({ ok: false, error: 'validation' }, { status: 422 });
@@ -44,7 +51,7 @@ export async function POST(req: Request) {
 
     const { error } = await resend.emails.send({
       from: process.env.CONTACT_FROM_EMAIL || 'BOUND FOR FUTURE <noreply@monvex-group.de>',
-      to: [BRAND.email],
+      to: recipients,
       replyTo: email,
       subject: `Neue Website-Anfrage von ${name}`,
       text: [
